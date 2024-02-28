@@ -8,6 +8,7 @@ Guide
 - [Dependencies](#dependencies)
 - [Project Rationale](#project-rationale)
 - [Analysis](#analysis)
+- [Medium](#medium)
 - [Licensing](#licensing)
 
 # About This Project
@@ -87,6 +88,9 @@ Potential renters may find the best value in Jamaica Plain, followed by Dorchest
 Short-Term Rental Bookings Trend
 - Examining the number of first-time reviews aggregated by month reveals a drastic increase from 2013 to 2016.
 - Recent data suggests a decline in first-time reviews in 2017, particularly during winter months, with a typical mid-year increase during summer.
+
+# Medium
+View my blog post regarding this analysis on [Medium](https://medium.com/@tmcintyre802/wicked-good-stays-a-bahstonian-tale-of-airbnb-surprises-and-lobstah-level-satisfaction-c8ed16e8c3a8)!
 
 # Licensing
 This information is licensed under Public Domain. More information regarding this can be found on [Kaggle](https://www.kaggle.com/datasets/airbnb/boston).
