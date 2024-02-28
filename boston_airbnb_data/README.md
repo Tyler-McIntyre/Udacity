@@ -84,7 +84,7 @@ Average Prices by Neighborhood:
 Additional analysis compares average prices, review scores, and review frequency to identify neighborhoods offering the most value to renters.
 Potential renters may find the best value in Jamaica Plain, followed by Dorchester and South End.
 
-Findings for Question 5: Short-Term Rental Bookings Trend
+Short-Term Rental Bookings Trend
 - Examining the number of first-time reviews aggregated by month reveals a drastic increase from 2013 to 2016.
 - Recent data suggests a decline in first-time reviews in 2017, particularly during winter months, with a typical mid-year increase during summer.
 
