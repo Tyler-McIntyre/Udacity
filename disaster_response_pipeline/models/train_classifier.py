@@ -6,6 +6,7 @@ import re
 import numpy as np
 import time
 import pickle
+import warnings
 
 from sqlalchemy import create_engine
 from nltk.tokenize import word_tokenize
@@ -109,10 +110,41 @@ def build_model():
         ('classifier', MultiOutputClassifier(RandomForestClassifier(n_jobs=1)))
     ])
 
-    return pipeline
+    # Define the parameters grid for GridSearchCV
+    parameters = {
+        'classifier__estimator__n_estimators': [10, 50, 100],
+        'classifier__estimator__min_samples_split': [2, 5, 10]
+    }
+
+    # Create GridSearchCV object
+    cv = GridSearchCV(pipeline, param_grid=parameters, n_jobs=1)
+
+    return cv
 
 
 def evaluate_model(model, X_test, Y_test):
+    """
+    Evaluate the performance of a given model on test data.
+
+    Parameters:
+        model (object): The trained machine learning model.
+        X_test (array-like): Feature matrix of the test data.
+        Y_test (array-like): True labels of the test data.
+
+    Returns:
+        float: The average F1 score across all labels.
+
+    Notes:
+        This function predicts labels for the given test data using the provided model,
+        calculates the F1 score for each label separately, and then computes the average
+        F1 score across all labels. It prints the average F1 score on the test data.
+
+    Example:
+        >>> model = RandomForestClassifier()
+        >>> model.fit(X_train, Y_train)
+        >>> evaluate_model(model, X_test, Y_test)
+        Average F1 Score on test data: 0.85
+    """
     # Predict on the testing data
     y_pred = model.predict(X_test)
     
@@ -146,6 +178,9 @@ def main():
         database_filepath, model_filepath = sys.argv[1:]
         print('Loading data...\n    DATABASE: {}'.format(database_filepath))
         X, y = load_data(database_filepath)
+        # Disable user warning logs
+        warnings.filterwarnings("ignore", message="The parameter 'token_pattern' will not be used since 'tokenizer' is not None")
+
         
         # Split the data into training and testing sets
         X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.8, test_size=0.2, random_state=42)
@@ -155,6 +190,9 @@ def main():
 
         print('Training model...')
         model.fit(X_train, y_train)
+
+        print('Best parameters found by GridSearchCV:')
+        print(model.best_params_)
 
         print('Evaluating model...')
         evaluate_model(model, X_test, y_test)

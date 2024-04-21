@@ -4,6 +4,24 @@ import re
 from sqlalchemy import create_engine
 
 def load_data(messages_filepath, categories_filepath):
+    """
+    Load and merge messages and categories datasets.
+
+    Parameters:
+        messages_filepath (str): Filepath to the messages dataset.
+        categories_filepath (str): Filepath to the categories dataset.
+
+    Returns:
+        DataFrame: A merged DataFrame containing messages and categories.
+
+    Notes:
+        This function loads two separate CSV files, one containing messages and the other containing categories,
+        and merges them based on the 'id' column. It returns a single DataFrame containing both messages and
+        categories, ready for further processing.
+
+    Example:
+        >>> df = load_data('messages.csv', 'categories.csv')
+    """
     # load messages dataset
     messages = pd.read_csv(messages_filepath)
     
@@ -16,6 +34,29 @@ def load_data(messages_filepath, categories_filepath):
     return df_merged
 
 def clean_data(df):
+    """
+    Clean the input DataFrame by processing the 'categories' column.
+
+    Parameters:
+        df (DataFrame): The input DataFrame containing the 'categories' column.
+
+    Returns:
+        DataFrame: A cleaned DataFrame with processed category columns.
+
+    Notes:
+        This function takes a DataFrame as input, processes the 'categories' column, and performs the following steps:
+        - Splits the 'categories' column into individual category columns.
+        - Extracts column names for the categories.
+        - Renames the category columns.
+        - Extracts category values from each cell.
+        - Fills NaN values with 0.
+        - Converts column types to integers.
+        - Drops duplicates from the DataFrame.
+        - Returns the cleaned DataFrame.
+
+    Example:
+        >>> df_cleaned = clean_data(df)
+    """
     # create a dataframe of the 36 individual category columns
     categories = df['categories'].str.split(';', expand=True)
     
