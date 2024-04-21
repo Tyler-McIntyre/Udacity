@@ -92,13 +92,29 @@ def clean_data(df):
     
     # drop duplicates
     df_no_duplicates = df.drop_duplicates()
+
+    # Drop rows where the 'related' column has a value of 2
+    df_cleaned = df_no_duplicates[df_no_duplicates['related'] != 2].copy()
     
-    return df_no_duplicates
+    return df_cleaned
 
 
 def save_data(df, database_filename):
+    """
+    Save a DataFrame to a SQLite database.
+
+    Parameters:
+    df (DataFrame): The DataFrame to be saved.
+    database_filename (str): The filename of the SQLite database.
+
+    Returns:
+    None
+
+    Example:
+    >>> save_data(df, 'disaster_messages.db')
+    """
     engine = create_engine(f'sqlite:///{database_filename}')
-    df.to_sql('messages', engine, index=False)
+    df.to_sql('messages', engine, index=False, if_exists='replace')
 
 
 def main():
