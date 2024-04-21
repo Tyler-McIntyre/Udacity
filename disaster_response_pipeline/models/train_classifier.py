@@ -25,6 +25,7 @@ from sklearn.naive_bayes import GaussianNB
 from column_selector import ColumnSelector
 from sklearn.multioutput import MultiOutputClassifier
 from sklearn.neural_network import MLPClassifier
+from sklearn.metrics import classification_report
 
 # download data
 nltk.download('punkt')
@@ -121,8 +122,7 @@ def build_model():
 
     return cv
 
-
-def evaluate_model(model, X_test, Y_test):
+def evaluate_model(model, X_test, Y_test, category_names=None):
     """
     Evaluate the performance of a given model on test data.
 
@@ -130,6 +130,7 @@ def evaluate_model(model, X_test, Y_test):
         model (object): The trained machine learning model.
         X_test (array-like): Feature matrix of the test data.
         Y_test (array-like): True labels of the test data.
+        category_names (list): List of category names corresponding to the columns in Y_test.
 
     Returns:
         float: The average F1 score across all labels.
@@ -142,7 +143,7 @@ def evaluate_model(model, X_test, Y_test):
     Example:
         >>> model = RandomForestClassifier()
         >>> model.fit(X_train, Y_train)
-        >>> evaluate_model(model, X_test, Y_test)
+        >>> evaluate_model(model, X_test, Y_test, category_names=['category1', 'category2', ...])
         Average F1 Score on test data: 0.85
     """
     # Predict on the testing data
@@ -164,9 +165,28 @@ def evaluate_model(model, X_test, Y_test):
     avg_f1 = np.mean(f1_scores)
 
     print("Average F1 Score on test data:", avg_f1)
-
+    
+    # Generate a classification report for each category
+    for i, category_name in enumerate(category_names):
+        category_report = classification_report(Y_test[:, i], y_pred[:, i])
+        print(f"Classification Report for category '{category_name}':")
+        print(category_report)
+        print()
 
 def save_model(model, model_filepath):
+    """
+    Save a trained machine learning model to a file using pickle.
+
+    Parameters:
+    model (object): The trained machine learning model to be saved.
+    model_filepath (str): The filepath where the model will be saved.
+
+    Returns:
+    None
+
+    Example:
+    >>> save_model(model, 'classifier.pkl')
+    """
     filename = model_filepath
 
     with open(filename, 'wb') as file:
@@ -195,7 +215,7 @@ def main():
         print(model.best_params_)
 
         print('Evaluating model...')
-        evaluate_model(model, X_test, y_test)
+        evaluate_model(model, X_test, y_test, category_names=list(y_test.columns))
 
         print('Saving model...\n    MODEL: {}'.format(model_filepath))
         save_model(model, model_filepath)
