@@ -1,6 +1,22 @@
 # Disaster Response Pipeline Project
 
-Project Summary:
+## Description:
+
+This application plays a crucial role in disaster response management by efficiently categorizing incoming messages, enabling rapid identification of urgent needs and effective allocation of resources. 
+
+This practical tool empowers both individuals and organizations to respond promptly and effectively in times of crisis, potentially saving lives and minimizing the impact of disasters on communities. 
+
+Additionally, through the user interface (UI), individuals can contribute to the classification process by providing new information for categorization.
+
+An ML model trained on various sources of information can significantly expedite response times and enhance the efficiency of organizations involved in disaster management in several ways:
+
+<ins>Automated Prioritization</ins>: By analyzing and categorizing incoming messages, the ML model can automatically prioritize them based on their urgency and relevance. This allows response teams to focus their attention on critical issues first, accelerating the overall response process.
+
+<ins>Resource Allocation</ins>: With the ability to quickly identify emerging needs and trends from the incoming data, organizations can optimize the allocation of resources such as personnel, supplies, and equipment. This ensures that resources are directed where they are most needed, minimizing wastage and improving the effectiveness of relief efforts.
+
+<ins>Situation Awareness</ins>: ML models can provide real-time insights into the evolving situation on the ground by continuously analyzing incoming data streams. This enhances situational awareness for decision-makers, enabling them to make informed decisions and adapt their response strategies as needed.
+
+## Project Summary:
 
 <ins>Data Loading and Preprocessing</ins>:
 
